@@ -42,6 +42,10 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 window.Vue = require('vue').default;
 
+import { BootstrapVue } from 'bootstrap-vue';
+import '@/assets/scss/app.scss';
+Vue.use(BootstrapVue);
+
 import App from './App.vue';
 
 import VueCompositionApi from '@vue/composition-api';

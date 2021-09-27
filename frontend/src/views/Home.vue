@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="tw-p-5">
     {{ test }}
   </div>
 </template>

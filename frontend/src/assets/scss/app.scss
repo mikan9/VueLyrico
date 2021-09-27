@@ -1,0 +1,11 @@
+// Define variable defaults
+$body-bg: rgb(31, 31, 31);
+$body-color: rgb(238, 238, 238);
+
+// Then import Bootstrap an BootstrapVue SCSS files (order is important)
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+@import 'node_modules/bootstrap-vue/src/index.scss';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
