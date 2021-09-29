@@ -1,20 +1,25 @@
 const path = require('path');
 const mix = require('laravel-mix');
 
-/*
- |--------------------------------------------------------------------------
- | Mix Asset Management
- |--------------------------------------------------------------------------
- |
- | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel application. By default, we are compiling the Sass
- | file for the application as well as bundling up all the JS files.
- |
- */
+mix.extend('i18n', new class {
+    webpackRules() {
+        return [
+            {
+                resourceQuery: /blockType=i18n/,
+                type: 'javascript/auto',
+                loader: '@kazupon/vue-i18n-loader',
+            },
+        ];
+    }
+}(),
+);
 
-mix.js('frontend/src/main.js', 'public/js/app.js')
+
+mix.i18n()
+    .js('frontend/src/main.js', 'public/js/app.js')
     .vue()
     .sass('resources/sass/app.scss', 'public/css')
     .alias({
         '@': path.join(__dirname, 'frontend/src')
-    });
+    })
+    .copy("frontend/src/assets/images", "public/images/");
