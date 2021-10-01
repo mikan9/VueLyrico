@@ -16,7 +16,7 @@
 						}}</span>
 					</div>
 				</div>
-				<b-button class="tw-h-10" @click="authSpotify">Auth</b-button>
+				<b-button @click="authSpotify">Auth</b-button>
 			</b-card-body>
 		</b-card>
 		<b-card class="tw-m-4 song-lyrics">
@@ -28,14 +28,21 @@
 </template>
 
 <script>
-import { computed, onMounted, ref, reactive } from "@vue/composition-api";
+import {
+	computed,
+	onMounted,
+	ref,
+	reactive,
+	onBeforeUnmount,
+} from "@vue/composition-api";
 import api from "@/repositories";
 
 export default {
 	name: "Home",
 	setup(props, { root }) {
 		const currentlyPlaying = ref(null);
-
+		const poll = ref(null);
+		const pollingInterval = ref(5000);
 		const song = reactive({
 			artists: computed(() =>
 				currentlyPlaying.value
@@ -61,14 +68,34 @@ export default {
 		}
 
 		async function getCurrentlyPlaying() {
-			const { data } = await api.spotify.getCurrentlyPlaying(
-				root.$store.state.spotify.access_token
-			);
-			currentlyPlaying.value = data.item;
+			api.spotify
+				.getCurrentlyPlaying()
+				.then(({ data }) => {
+					currentlyPlaying.value = data.item;
+				})
+				.catch(async (error) => {
+					if (error.response) {
+						if (error.response.status === 401) {
+							authSpotify();
+						}
+					}
+					console.log(error);
+				});
 		}
 
-		onMounted(() => {
+		onMounted(async () => {
 			getCurrentlyPlaying();
+			poll.value = setInterval(
+				function () {
+					getCurrentlyPlaying();
+				}.bind(root),
+				pollingInterval.value
+			);
+		});
+
+		onBeforeUnmount(() => {
+			clearInterval(poll.value);
+			poll.value = null;
 		});
 
 		return {
