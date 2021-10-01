@@ -12,7 +12,7 @@ export default {
     getAuthUrl() {
         return Client.get(`${resource}/auth`);
     },
-    getCurrentlyPlaying(token) {
-        return Client.post(`${resource}/currently_playing`, { access_token: token });
+    getCurrentlyPlaying() {
+        return Client.get(`${resource}/currently_playing`);
     }
 }
