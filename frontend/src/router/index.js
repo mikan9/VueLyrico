@@ -10,14 +10,6 @@ export default new VueRouter({
         {
             path: '/:query?',
             component: () => import('@/views/Home'),
-            props: true,
-            beforeEnter: (to, from, next) => {
-                if (!!to.query) {
-                    store.dispatch("updateSpotify", { ...to.query });
-                }
-
-                next();
-            }
         }
     ]
 })
