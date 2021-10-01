@@ -23,6 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware(['web'])->group(function () {
     Route::get('/spotify/auth', [SpotifyController::class, 'getAuthUrl']);
     Route::get('/spotify/callback', [SpotifyController::class, 'getTokens']);
+    Route::get('/spotify/currently_playing', [SpotifyController::class, 'getCurrentlyPlaying']);
 });
-
-Route::post('/spotify/currently_playing', [SpotifyController::class, 'getCurrentlyPlaying']);
