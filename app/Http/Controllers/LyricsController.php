@@ -11,9 +11,11 @@ use App\Models\Lyrics;
 
 class LyricsController extends Controller
 {
-    public function show(Lyrics $lyrics, $source_type, $artist, $title)
+    public function show($source_type, $artist, $title)
     {
-        if(!$lyrics->exists) {
+        $lyrics = Lyrics::where('artists', $artist)->where('title', $title)->first();
+
+        if(!$lyrics) {
             $base_uri = env('MUSIXMATCH_BASE_URL');
             $response = Http::withOptions([
                 'verify' => false,
