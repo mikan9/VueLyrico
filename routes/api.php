@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SpotifyController;
+use App\Http\Controllers\LyricsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,5 @@ Route::middleware(['web'])->group(function () {
     Route::get('/spotify/callback', [SpotifyController::class, 'getTokens']);
     Route::get('/spotify/currently_playing', [SpotifyController::class, 'getCurrentlyPlaying']);
 });
+
+Route::get('/lyrics/{source_type}/{artist}/{title}', [LyricsController::class, 'show']);
