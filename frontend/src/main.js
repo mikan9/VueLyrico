@@ -31,6 +31,9 @@ import App from './App.vue';
 import VueCompositionApi from '@vue/composition-api';
 Vue.use(VueCompositionApi);
 
+import VueMeta from 'vue-meta';
+Vue.use(VueMeta);
+
 import store from '@/store';
 
 import router from '@/router';
